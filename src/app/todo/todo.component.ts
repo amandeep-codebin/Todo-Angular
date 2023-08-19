@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-todo',
@@ -9,14 +10,20 @@ export class TodoComponent {
 
 todoList : any[] = []
 
-  addTodo(item: string | any){
-    this.todoList.push({id: this.todoList.length, todo: item, completed: false})
-      console.log("todo added",item)
+  addTodo(form: NgForm){
+    this.todoList.push({id: this.todoList.length, todo: form.controls['task'].value, isCompleted: false})
+    form.reset()
   }
 
-  removeTodo(id: number | string ) {
+  onDelete(id: number | string ) {
     this.todoList = this.todoList.filter((item)=> item.id !== id)
-    console.log('removeTodo',id)
   }
+
+  onCheck(index: number) {
+
+    this.todoList[index].isCompleted = !this.todoList[index].isCompleted
+
+  }
+
 }
 

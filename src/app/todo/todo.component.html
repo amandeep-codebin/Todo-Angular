@@ -1,4 +1,4 @@
-<input type="text" placeholder="Enter todo here" #task />
+<!--<input type="text" placeholder="Enter todo here" #task />
 <button (click)="addTodo(task.value)">Add todo</button>
 
 
@@ -6,5 +6,34 @@
   <li>{{item.todo}}
     <button (click)="removeTodo(item.id)">Remove</button>
   </li>
-  
-</ul>
+</ul>-->
+
+<div class="container mt-4">
+  <form #taskForm="ngForm" (ngSubmit)="addTodo(taskForm)"> 
+    <div class="form-group">
+      <label for="">Todo</label>
+      <input required type="text" #task="ngModel" class="form-control" name="task" ngModel id="task" placeholder="Enter task">
+      <small *ngIf="taskForm.invalid && taskForm.dirty" class="form-text text-danger">Required field</small>
+    </div>
+    <button [disabled]="taskForm.invalid" type="submit"  class="btn btn-primary mt-3">Submit</button>
+  </form>
+
+  <table class="table">
+    <thead>
+      <tr class="heading-row">
+        <th scope="col">Sno</th>
+        <th scope="col">Task</th>
+        <th scope="col">completed</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of todoList,index as i">
+        <th scope="row">{{i+1}}</th>
+        <td>{{item.todo}}</td>
+        <td><input type="checkbox" (change)="onCheck(i)" /></td>
+        <td><button class="btn btn-danger" (click)="onDelete(item.id)">Delete</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
